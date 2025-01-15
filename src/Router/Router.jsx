@@ -5,12 +5,19 @@ import MainLayOut from "../Layouts/MainLayOut";
 import AccessLayOut from "../Layouts/AccessLayOut";
 import Login from "../Pages/Login";
 import Register from "./Register";
+import Home from "../Layouts/Home";
   
   
  export const router = createBrowserRouter([
     {
       path: "/",
       element: <MainLayOut></MainLayOut>,
+      children : [
+        {
+          path : '/',
+          element : <Home></Home>
+        }
+      ]
     },
     {
         path: 'soft_heart_register_accessPage',
