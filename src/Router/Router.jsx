@@ -6,6 +6,7 @@ import AccessLayOut from "../Layouts/AccessLayOut";
 import Login from "../Pages/Login";
 import Register from "./Register";
 import Home from "../Layouts/Home";
+import Campaings from "../Components/Campaings";
   
   
  export const router = createBrowserRouter([
@@ -16,6 +17,10 @@ import Home from "../Layouts/Home";
         {
           path : '/',
           element : <Home></Home>
+        },
+        {
+          path : '/newCampain',
+          element : <Campaings/>
         }
       ]
     },

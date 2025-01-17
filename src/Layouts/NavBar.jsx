@@ -42,7 +42,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
+            <Link to='/newCampain' className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
               New Campaign
             </Link>
           </li>

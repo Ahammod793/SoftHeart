@@ -9,18 +9,18 @@ const BannerCarousel = () => {
 
   const banners = [
     (<div className="flex justify-center border border-red-300 items-center bg-slate-700 text-white h-96">
-        <div class="items-center text-center gap-4 pt-12 pr-4 rotate-[5deg]">
-          <span class="text-2xl">Hi,</span>
-          <span class="text-amber-300 font-bold text-6xl">Donors!</span>
-          <h3 class="font-medium text-2xl pt-4 ps-5 -rotate-[5deg]">
+        <div className="items-center text-center gap-4 pt-12 pr-4 rotate-[5deg]">
+          <span className="text-2xl">Hi,</span>
+          <span className="text-amber-300 font-bold text-6xl">Donors!</span>
+          <h3 className="font-medium text-2xl pt-4 ps-5 -rotate-[5deg]">
             Join Hands to Make a Difference with &nbsp;
-            <span class="text-pink-600 underline decoration-dashed decoration-orange-400">
+            <span className="text-pink-600 underline decoration-dashed decoration-orange-400">
               SoftHeart
             </span>
             .
           </h3><br />
           <div className="flex -rotate-[5deg]">
-           <p>SHARE YOUR THINKING WITH OTHERS<br />& <br /> <span className="text-purple-400 font-bold text-2xl">show them</span> <br />
+           <p className="text-medium">SHARE YOUR THINKING WITH OTHERS<br />& <br /> <span className="text-purple-400 font-bold text-2xl">show them</span> <br />
            <Fade direction="top-left"><span className="text-3xl text-[#99f3a7] font-bold">HOW CREATIVE YOU ARE!</span>
            </Fade></p>
             </div>
@@ -51,7 +51,7 @@ const BannerCarousel = () => {
       </div>
     </div>,
     <div className="bg-cover flex justify-center items-center bg-slate-700 text-white h-96">
-      <h3 class="font-medium text-2xl ps-6">
+      <h3 className="font-medium text-2xl ps-6">
         Get your idea in front of thousands of potential supporters.
       </h3>
       <img src={manSmilling} alt="" className="w-full h-full" />
@@ -72,7 +72,7 @@ const BannerCarousel = () => {
     stopAutoSlide();
     intervalRef.current = setInterval(() => {
       handleNext();
-    }, 3000);
+    }, 2000);
   };
 
   const stopAutoSlide = () => {
@@ -83,7 +83,7 @@ const BannerCarousel = () => {
   };
 
   useEffect(() => {
-    startAutoSlide();
+   startAutoSlide()
     return () => stopAutoSlide();
   }, []);
 
@@ -96,7 +96,7 @@ const BannerCarousel = () => {
       >
         <button
           onClick={handlePrev}
-          className="absolute left-4 bg-slate-100 p-2 w-8 h-8 flex items-center justify-center rounded-full text-black"
+          className="absolute left-4 bg-slate-100 p-2 w-8 h-8 flex items-center justify-center rounded-full text-black" 
         >
           ❮
         </button>
@@ -104,7 +104,7 @@ const BannerCarousel = () => {
           {banners[currentIndex]}
         </div>
         <button
-          onClick={handleNext}
+          onClick={handleNext} 
           className="absolute right-4 bg-slate-100 p-2 w-8 h-8 flex items-center justify-center rounded-full text-black"
         >
           ❯

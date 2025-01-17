@@ -1,11 +1,15 @@
 import React from 'react'
 import Banner from '../Components/Banner'
-import Slider from '../Components/Slider'
+
+import Campaings from '../Components/Campaings'
 
 export default function Home() {
   return (
     <>
-        <Banner></Banner>
+       <div> <Banner></Banner></div>
+        <div>
+          {/* <Campaings></Campaings> */}
+        </div>
     </>
   )
 }
