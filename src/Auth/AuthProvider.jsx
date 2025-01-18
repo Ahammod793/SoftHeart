@@ -6,10 +6,14 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 
 export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
+  const [userName, setUserName] = useState(null)
+  const [userEmail, setUserEmail] = useState(null)
+  const [userImage, setUserImage] = useState(null)
   const [user, setUser] = useState(null)
   const googleProvider = new GoogleAuthProvider();
   const gitHubProvider = new GithubAuthProvider();
@@ -27,7 +31,9 @@ export default function AuthProvider({ children }) {
   const loginWithGitHub = () => {
     return signInWithPopup(auth, gitHubProvider);
   };
-
+  const logOut = () => {
+    return signOut(auth)
+  }
   
   
   const items = {
@@ -35,8 +41,9 @@ export default function AuthProvider({ children }) {
     loginWithEmailPass,
     loginWithGoogle,
     loginWithGoogle,
+    logOut,
     user, setUser
   };
-console.log(user)
+console.log(userName, userEmail)
   return <AuthContext.Provider value={items}>{children}</AuthContext.Provider>;
 }

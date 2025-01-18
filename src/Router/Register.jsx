@@ -14,7 +14,7 @@ export default function Register() {
     e.preventDefault();
     const form = formRef.current;
     const name = form.name.value;
-    const email = form.email.value;
+    const Email = form.email.value;
     const password = form.password.value;
     const profilePic = form.profile.value;
     // const userinfo = { name, profilePic };
@@ -25,14 +25,15 @@ export default function Register() {
       );
       return;
     }
-    newUserWithEmailPass(email, password)
+    newUserWithEmailPass(Email, password)
       .then((userResult) => {
         const user = userResult.user;
         updateProfile(auth.currentUser, {
           displayName: name,
+          email : Email,
           photoURL: profilePic,
         }).then(() => {
-          setUser(user.displayName ? name : user.email)
+          setUser(user)
         });
         Swal.fire({
           title: "SignUp Success!",

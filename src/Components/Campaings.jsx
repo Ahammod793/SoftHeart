@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
-import share from "../assets/story.jpg";
+import React, { useContext, useRef, useState } from "react";
 import { DateTime } from "luxon";
 import { Slide } from "react-awesome-reveal";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Auth/AuthProvider";
 
 export default function Campaings() {
   const [selectedTime, setSelectedTime] = useState("");
@@ -9,6 +11,8 @@ export default function Campaings() {
   const [imgVideoBool, setImgVideoBool] = useState(false);
   const [imgVideoData, setImgVideoData] = useState("");
   const campaignRef = useRef();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleCustomDate = () => {
     setIsCustomDate(true);
@@ -32,7 +36,6 @@ export default function Campaings() {
         url: URL.createObjectURL(isItem[0]),
         type: isItem[0].type,
       });
-      console.log(isItem[0]);
     }
   };
 
@@ -44,26 +47,74 @@ export default function Campaings() {
     const file = form.file.files[0];
     const campStart = selectedTime || DateTime.now().toISO();
     const campEnd = form.endTime.value;
-    const applyer = form.applyer.value;
+    // const applyer = form.applyer.value;
+    // const author = form.campAuthor.value;
+    const name = user.displayName;
+    const email = user.email;
     const description = form.campDetails.value;
-    const donationNeed = form.donationWilling.value === "true";
     const newCampaign = {
       campaignTitle,
       campaignType,
       file,
       campStart,
       campEnd,
-      applyer,
+      // applyer,
+      name, email,
+      author,
       description,
-      donationNeed,
+      isDonationNeed,
     };
-
     console.log(newCampaign);
+    fetch(`http://localhost:5000/newcampaign`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newCampaign),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          title: "success",
+          text: "campaign aided",
+          icon: "success",
+        }).then(form.reset(), navigate("/allCampaign"));
+      });
   };
 
   return (
     <div className="flex flex-col items-center justify-center mb-6">
       <form className="w-6/12 my-8" ref={campaignRef}>
+        <div className="flex flex-col ">
+          <h2 className="font-medium text-black text-left items-center p-1">
+            Image or Thumbnail
+          </h2>
+          <div className="shadow p-3 items-center justify-center w-full h-auto my-5 border border-blue-200">
+            <input
+              type="file"
+              name="file"
+              onChange={inputImageOrVideo}
+              className="pb-3"
+            />
+            {imgVideoBool && (
+              <div className="w-full h-[90%]">
+                {imgVideoData.type.match("image") ? (
+                  <Slide direction="down">
+                    <img src={imgVideoData.url} className="w-full h-[400px]" />
+                  </Slide>
+                ) : (
+                  <Slide direction="down">
+                    <video
+                      src={imgVideoData.url}
+                      controls
+                      className="w-full h-[400px]"
+                    ></video>
+                  </Slide>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
         <label className="text-black text-left items-center font-medium">
           HeadLine for Your Campaign <br />
           <input
@@ -84,37 +135,49 @@ export default function Campaings() {
               className="font-light text-black mt-1 mb-5 p-2 border border-black"
             >
               <option value="personal">Personal</option>
-              <option value="donation">Donation</option>
-              <option value="social">Social Change Campaigns</option>
-              <option value="fundraising">Fund Raising Campaigns</option>
+              <option value="donation">StartUp</option>
+              <option value="social">Business</option>
+              <option value="fundraising">Creative Ideas</option>
             </select>
           </label>
         </div>
 
-        <div className="flex flex-col shadow p-3 items-center justify-center w-full h-auto my-5 border border-blue-200">
+        {/* <div>
+          <label className="flex flex-col">
+            <h2 className="font-medium text-black text-left items-center p-1">
+              Who can join this Campaign?
+            </h2>
+            <select
+              name="applyer"
+              className="font-light text-black mt-1 mb-5 p-2 border border-black"
+            >
+              <option value="socialWorkers">Social Workers</option>
+              <option value="everyone">Everyone</option>
+              <option value="businessman">Businessman</option>
+            </select>
+          </label>
+        </div> */}
+
+        <div className="w-full mt-2 mb-2">
+          <h2 className="font-medium text-black text-left items-center p-1">
+            Campaign Details:
+          </h2>
+          <textarea
+            name="campDetails"
+            className="p-2 w-full h-[200px] text-lg font-light border border-black"
+          ></textarea>
+        </div>
+        <div className="flex flex-col  gap-2 my-2">
+          <h2 className="font-medium text-black text-left items-center p-1">
+            Min. Donation Amount
+          </h2>
           <input
-            type="file"
-            name="file"
-            onChange={inputImageOrVideo}
-            className="pb-3"
+            type="number"
+            placeholder="Minimum donation amount"
+            name="campAuthor"
+            required
+            className="text-black border border-black p-4 "
           />
-          {imgVideoBool && (
-            <div className="w-full h-[90%]">
-              {imgVideoData.type.match("image") ? (
-                <Slide direction="down">
-                  <img src={imgVideoData.url} className="w-full h-[400px]" />
-                </Slide>
-              ) : (
-                <Slide direction="down">
-                  <video
-                    src={imgVideoData.url}
-                    controls
-                    className="w-full h-[400px]"
-                  ></video>
-                </Slide>
-              )}
-            </div>
-          )}
         </div>
         <div className="flex justify-around items-start mt-4">
           <div className="mb-3">
@@ -149,46 +212,25 @@ export default function Campaings() {
             />
           </div>
         </div>
-        <div>
-          <label className="flex flex-col">
-            <h2 className="font-medium text-black text-left items-center p-1">
-              Who can join this Campaign?
-            </h2>
-            <select
-              name="applyer"
-              className="font-light text-black mt-1 mb-5 p-2 border border-black"
-            >
-              <option value="socialWorkers">Social Workers</option>
-              <option value="everyone">Everyone</option>
-              <option value="businessman">Businessman</option>
-            </select>
-          </label>
-        </div>
-        <div className="w-full mt-2 mb-2">
+        <div className="flex flex-col  gap-2">
           <h2 className="font-medium text-black text-left items-center p-1">
-            Campaign Details:
+            Author
           </h2>
-          <textarea
-            name="campDetails"
-            className="p-2 w-full h-[200px] text-lg font-light border border-black"
-          ></textarea>
-        </div>
-        <div className="flex flex-row gap-9 text-center items-center">
-          <h1 className="font-medium text-black text-left items-center p-1">
-            Donation Needed?
-          </h1>
-          <label htmlFor="" className="text-black">
-            Yes <input type="radio" name="donationWilling" value="true" />
-          </label>
-          <label htmlFor="" className="text-black">
-            No &nbsp;
-            <input type="radio" name="donationWilling" value="false" />
-          </label>
+          <div className="shadow p-3 items-center justify-center w-full h-auto  border border-blue-200">
+            <div className="flex flex-row gap-20">
+              <h4 className="text-bold text-black text-[16px]">Name :</h4>
+              <h1 className="text-bold text-[14px]">{user.displayName}</h1>
+            </div>
+            <div className="flex flex-row gap-20">
+              <h4 className="text-bold text-black text-[16px]">Email : </h4>
+              <h1 className="text-bold text-[14px]">{user.email}</h1>
+            </div>
+          </div>
         </div>
       </form>
       <div className="flex items-end justify-end w-6/12 gap-6">
         <button className="btn btn-primary" onClick={campaignHundler}>
-          Save
+          Add
         </button>
         <button
           className="btn btn-outline"

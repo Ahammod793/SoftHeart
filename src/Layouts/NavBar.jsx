@@ -5,10 +5,8 @@ import logo from "../assets/SoftHeart.png";
 import { GoSun } from "react-icons/go";
 import { IoIosMoon } from "react-icons/io";
 import { AuthContext } from "../Auth/AuthProvider";
-import { signOut } from "firebase/auth";
-import { auth } from "../FireBase/firebase.config";
 export default function NavBar() {
-  const {user,setUser} = useContext(AuthContext)
+  const {logOut,user, setUser} = useContext(AuthContext)
   const [thame, setThame] = useState(false);
   const navigate = useNavigate()
   const day_night_thame = () => {
@@ -16,7 +14,7 @@ export default function NavBar() {
     console.log(thame);
   };
   const logoutHundle=()=>{
-    signOut(auth).then(() => {
+    logOut().then(() => {
       // console.log('loguot Success')
       setUser(null)
       navigate('/')
@@ -24,6 +22,7 @@ export default function NavBar() {
       // An error happened.
     });
   }
+  console.log(user)
   return (
     <header className="flex flex-row items-center justify-between px-10 bg-[r#99daf8] bg-[#26343c] py-2">
       <Link>
@@ -37,7 +36,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
+            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={'/allCampaign'}>
               All Campaign
             </Link>
           </li>
@@ -78,8 +77,8 @@ export default function NavBar() {
           >
             <div className="w-10 rounded-full border border-green-400">
               <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                alt={user.displayName}
+                src={user.photoURL}
               />
             </div>
           </div>
@@ -96,7 +95,7 @@ export default function NavBar() {
               <a>Settings</a>
             </li>
             <li>
-              <Link ><button onClick={logoutHundle}>Logout</button></Link>
+              <button onClick={logoutHundle}>Logout</button>
             </li>
           </ul>
         </div> 

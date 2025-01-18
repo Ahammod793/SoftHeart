@@ -7,6 +7,7 @@ import Login from "../Pages/Login";
 import Register from "./Register";
 import Home from "../Layouts/Home";
 import Campaings from "../Components/Campaings";
+import PrivateAuthentication from "../Auth/PrivateAuthentication";
   
   
  export const router = createBrowserRouter([
@@ -20,7 +21,11 @@ import Campaings from "../Components/Campaings";
         },
         {
           path : '/newCampain',
-          element : <Campaings/>
+          element : <PrivateAuthentication><Campaings/></PrivateAuthentication>
+        },
+        {
+          path : '/allCampaign',
+          element : <div>this is all camp</div>
         }
       ]
     },
