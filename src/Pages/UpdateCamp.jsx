@@ -2,10 +2,10 @@ import React, { useContext, useRef, useState } from "react";
 import { DateTime } from "luxon";
 import { Slide } from "react-awesome-reveal";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Auth/AuthProvider";
 
-export default function Campaings() {
+export default function UpdateCamp() {
   const [selectedTime, setSelectedTime] = useState("");
   const [isCustomDate, setIsCustomDate] = useState(false);
   const [imageURL, setImageURL] = useState(null)
@@ -13,6 +13,9 @@ export default function Campaings() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
+  const campData = useLoaderData()
+  const {_id,title,file,campType,campaignStart,campaignEnd, campDiscription,donation}= campData
+  console.log(campData)
   const handleCustomDate = () => {
     setIsCustomDate(true);
   };
@@ -32,7 +35,7 @@ export default function Campaings() {
     setImageURL(thumb)
   };
 
-  const campaignHundler = (e) => {
+  const updateCamp = (e) => {
     e.preventDefault();
     const form = campaignRef.current;
     const campaignTitle = form.titleForCampaign.value;
@@ -44,7 +47,7 @@ export default function Campaings() {
     const email = user.email;
     const description = form.campDetails.value;
     const donationAmount_ = form.donationAmount.value
-    const newCampaign = {
+    const UpdCampaign = {
       campaignTitle,
       campaignType,
       file,
@@ -54,19 +57,19 @@ export default function Campaings() {
       name, email,
       description,
     };
-    console.log(newCampaign);
-    fetch(`http://localhost:5000/newcampaign`, {
-      method: "POST",
+    console.log(UpdCampaign);
+    fetch(`http://localhost:5000/updateCamp/${_id}`, {
+      method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newCampaign),
+      body: JSON.stringify(UpdCampaign),
     })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire({
           title: "success",
-          text: "New Campaign Added",
+          text: "campaign Updated",
           icon: "success",
         }).then(form.reset(), navigate("/allCampaign"));
       });
@@ -86,6 +89,7 @@ export default function Campaings() {
               name="file"
               onChange={inputImage}
               className="p-1 text-start items-center justify-center w-full"
+              defaultValue={file}
             />
             {imageURL && (
               <div className="w-full h-[90%]">
@@ -100,7 +104,8 @@ export default function Campaings() {
           HeadLine for Your Campaign <br />
           <input
             type="text"
-            placeholder="Title   Like: Personal creative projects (Video Editing, Book Publishing)"
+            placeholder={title}
+            defaultValue={title}
             name="titleForCampaign"
             className="border border-black h-10 border-double w-full mt-1 mb-5 p-4"
           />
@@ -112,7 +117,7 @@ export default function Campaings() {
           <label className="flex flex-col">
             <select
               name="campaignType"
-              id="campaignType"
+              id="campaignType" defaultValue={campType}
               className="font-light text-black mt-1 mb-5 p-2 border border-black"
             >
               <option value="personal">Personal</option>
@@ -123,27 +128,13 @@ export default function Campaings() {
           </label>
         </div>
 
-        {/* <div>
-          <label className="flex flex-col">
-            <h2 className="font-medium text-black text-left items-center p-1">
-              Who can join this Campaign?
-            </h2>
-            <select
-              name="applyer"
-              className="font-light text-black mt-1 mb-5 p-2 border border-black"
-            >
-              <option value="socialWorkers">Social Workers</option>
-              <option value="everyone">Everyone</option>
-              <option value="businessman">Businessman</option>
-            </select>
-          </label>
-        </div> */}
 
         <div className="w-full mt-2 mb-2">
           <h2 className="font-medium text-black text-left items-center p-1">
             Campaign Details:
           </h2>
-          <textarea
+          <textarea 
+            defaultValue={campDiscription}
             name="campDetails"
             className="p-2 w-full h-[200px] text-lg font-light border border-black"
           ></textarea>
@@ -154,7 +145,7 @@ export default function Campaings() {
           </h2>
           <input
             type="number"
-            placeholder="Minimum donation amount"
+            defaultValue={donation}
             name="donationAmount"
             required
             className="text-black border border-black p-4 "
@@ -164,7 +155,7 @@ export default function Campaings() {
           <div className="mb-3">
             <h3 className="font-medium pb-1 text-black">When will it start?</h3>
             <select
-              id="vv"
+              id="vv" defaultValue={campaignStart}
               onChange={handleSelectChange}
               className="border border-black rounded-md p-1"
             >
@@ -186,7 +177,7 @@ export default function Campaings() {
               Campaign Will End at -
             </h2>
             <input
-              type="datetime-local"
+              type="datetime-local" defaultValue={campaignEnd}
               name="endTime"
               id="endTime"
               className="text-black font-medium border border-black rounded-md p-1"
@@ -210,8 +201,8 @@ export default function Campaings() {
         </div>
       </form>
       <div className="flex items-end justify-end w-6/12 gap-6">
-        <button className="btn btn-primary" onClick={campaignHundler}>
-          Add
+        <button className="btn btn-primary" onClick={updateCamp}>
+          Update
         </button>
         <button
           className="btn btn-outline"

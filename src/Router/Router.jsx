@@ -9,6 +9,7 @@ import Home from "../Layouts/Home";
 import Campaings from "../Components/Campaings";
 import PrivateAuthentication from "../Auth/PrivateAuthentication";
 import MyCampaign from "../Pages/MyCampaign";
+import UpdateCamp from "../Pages/UpdateCamp";
   
   
  export const router = createBrowserRouter([
@@ -31,6 +32,11 @@ import MyCampaign from "../Pages/MyCampaign";
         {
           path : '/myCampaign',
           element : <MyCampaign/>
+        },
+        {
+          path : '/updateCamp/:id',
+          element : <UpdateCamp></UpdateCamp>,
+          loader : ({params}) => fetch(`http://localhost:5000/updateCamp/${params.id}`)
         }
       ]
     },
