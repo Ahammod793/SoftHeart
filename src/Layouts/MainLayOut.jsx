@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 
 export default function MainLayOut() {
   return (
-    <div className='flex flex-col '>
+    <div className='flex flex-col'>
         <nav><NavBar></NavBar></nav>
         <main className='px-10'><Outlet></Outlet></main>
         <footer><Footer></Footer></footer>

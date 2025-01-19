@@ -8,8 +8,7 @@ import { AuthContext } from "../Auth/AuthProvider";
 export default function Campaings() {
   const [selectedTime, setSelectedTime] = useState("");
   const [isCustomDate, setIsCustomDate] = useState(false);
-  const [imgVideoBool, setImgVideoBool] = useState(false);
-  const [imgVideoData, setImgVideoData] = useState("");
+  const [imageURL, setImageURL] = useState(null)
   const campaignRef = useRef();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -28,15 +27,9 @@ export default function Campaings() {
     }
   };
 
-  const inputImageOrVideo = (e) => {
-    const isItem = e.target.files;
-    if (isItem.length > 0) {
-      setImgVideoBool(true);
-      setImgVideoData({
-        url: URL.createObjectURL(isItem[0]),
-        type: isItem[0].type,
-      });
-    }
+  const inputImage = (e) => {
+    const thumb = e.target.value;
+    setImageURL(thumb)
   };
 
   const campaignHundler = (e) => {
@@ -44,25 +37,22 @@ export default function Campaings() {
     const form = campaignRef.current;
     const campaignTitle = form.titleForCampaign.value;
     const campaignType = form.campaignType.value;
-    const file = form.file.files[0];
+    const file = form.file.value;
     const campStart = selectedTime || DateTime.now().toISO();
     const campEnd = form.endTime.value;
-    // const applyer = form.applyer.value;
-    // const author = form.campAuthor.value;
     const name = user.displayName;
     const email = user.email;
     const description = form.campDetails.value;
+    const donationAmount_ = form.donationAmount.value
     const newCampaign = {
       campaignTitle,
       campaignType,
       file,
       campStart,
       campEnd,
-      // applyer,
+      donationAmount_,
       name, email,
-      author,
       description,
-      isDonationNeed,
     };
     console.log(newCampaign);
     fetch(`http://localhost:5000/newcampaign`, {
@@ -83,34 +73,25 @@ export default function Campaings() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mb-6">
+    <div className="flex flex-col items-center justify-center mb-6 min-h-screen">
       <form className="w-6/12 my-8" ref={campaignRef}>
         <div className="flex flex-col ">
           <h2 className="font-medium text-black text-left items-center p-1">
             Image or Thumbnail
           </h2>
-          <div className="shadow p-3 items-center justify-center w-full h-auto my-5 border border-blue-200">
+          <div className="shadow p-3 items-center justify-center w-full h-auto mb-5 border border-blue-200">
             <input
-              type="file"
+              type="url"
+              placeholder="Thumbnail URL"
               name="file"
-              onChange={inputImageOrVideo}
-              className="pb-3"
+              onChange={inputImage}
+              className="p-1 text-start items-center justify-center w-full"
             />
-            {imgVideoBool && (
+            {imageURL && (
               <div className="w-full h-[90%]">
-                {imgVideoData.type.match("image") ? (
                   <Slide direction="down">
-                    <img src={imgVideoData.url} className="w-full h-[400px]" />
+                    <img src={imageURL} className="w-full h-[400px] pt-4" />
                   </Slide>
-                ) : (
-                  <Slide direction="down">
-                    <video
-                      src={imgVideoData.url}
-                      controls
-                      className="w-full h-[400px]"
-                    ></video>
-                  </Slide>
-                )}
               </div>
             )}
           </div>
@@ -135,9 +116,9 @@ export default function Campaings() {
               className="font-light text-black mt-1 mb-5 p-2 border border-black"
             >
               <option value="personal">Personal</option>
-              <option value="donation">StartUp</option>
-              <option value="social">Business</option>
-              <option value="fundraising">Creative Ideas</option>
+              <option value="startUp">StartUp</option>
+              <option value="business">Business</option>
+              <option value="creativeIdea">Creative Ideas</option>
             </select>
           </label>
         </div>
@@ -174,7 +155,7 @@ export default function Campaings() {
           <input
             type="number"
             placeholder="Minimum donation amount"
-            name="campAuthor"
+            name="donationAmount"
             required
             className="text-black border border-black p-4 "
           />

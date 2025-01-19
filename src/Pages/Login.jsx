@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Auth/AuthProvider";
 import Swal from "sweetalert2";
@@ -6,9 +6,11 @@ import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
-  const { loginWithEmailPass, loginWithGoogle, setUserName, setUserEmail, setUserImage, setUser} = useContext(AuthContext);
+  const { loginWithEmailPass, loginWithGoogle, loginWithGitHub, setUserName, setUserEmail, setUserImage, setUser} = useContext(AuthContext);
   const navigate = useNavigate();
+  const [resErr, setResErr] = useState(null)
   const formRef = useRef();
+  
   const loginButton = (e) => {
     e.preventDefault();
     const form = formRef.current;
@@ -16,7 +18,7 @@ export default function Login() {
     const pass = form.password.value;
     loginWithEmailPass(email, pass)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setUser(res.user)
         Swal.fire({
           title: "SignUp Success!",
@@ -24,11 +26,14 @@ export default function Login() {
           draggable: true,
         }).then(() => {
           navigate("/");
-          console.log(user);
+          // console.log(user);
         });
       })
 
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err)
+        setResErr(err.code);
+      });
   };
   const googleLogin = () => {
     loginWithGoogle().then((res) => {
@@ -43,9 +48,20 @@ export default function Login() {
         // console.log(user);
       });
     }).catch(err => {
-      // err
+      console.log(err)
+      setResErr(err.code);
     })
   };
+  // .then((result) => {
+  //   // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+  //   const credential = GithubAuthProvider.credentialFromResult(result);
+  //   const token = credential.accessToken;
+
+  //   // The signed-in user info.
+  //   const user = result.user;
+  //   // IdP data available using getAdditionalUserInfo(result)
+  //   // ...
+  // })
   const githubLogin = () => {
     loginWithGitHub().then((res) => {
       console.log(res)
@@ -59,7 +75,16 @@ export default function Login() {
         // console.log(user);
       });
     }).catch(err => {
-      // err
+        // Handle Errors here.
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        // The email of the user's account used.
+        const email = err.customData.email;
+        // The AuthCredential type that was used.
+        // const credential = GithubAuthProvider.credentialFromError(err);
+        // ...
+    console.log(errorMessage, 'code ', errorCode, 'email ', email, 'credential ',)
+      setResErr(err.code);
     })
   }
   const forgatePass = (e) => {
@@ -73,7 +98,7 @@ export default function Login() {
           <button onClick={githubLogin} className="m-1 p-2 w-full shadow-xl  text-black  font-medium text-2xl border border-black rounded-md flex items-center justify-center hover:bg-slate-400"><FaGithub></FaGithub> &nbsp;GitHub</button>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form className="card-body" ref={formRef}>
+          <form className="card-body" ref={formRef} onChange={()=>setResErr(null)}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -106,6 +131,9 @@ export default function Login() {
                   Forgot password?
                 </a>
               </label>
+            </div>
+            <div className="text-[12px] font-light h-4 text-red-700 w-full">
+              {resErr}
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-secondary" onClick={loginButton}>

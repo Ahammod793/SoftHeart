@@ -40,7 +40,7 @@ export default function AuthProvider({ children }) {
     newUserWithEmailPass,
     loginWithEmailPass,
     loginWithGoogle,
-    loginWithGoogle,
+    loginWithGitHub,
     logOut,
     user, setUser
   };
