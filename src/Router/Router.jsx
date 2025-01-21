@@ -24,29 +24,25 @@ import Camp from "../Components/Camp";
           element : <Home></Home>
         },
         {
-          path : '/allCampaign',
+          path : '/campaigns',
           element : <AllCamp></AllCamp>,
           loader : () => fetch(`http://localhost:5000`)
         },{
-          path : '/allCamp/Camp/:id',
+          path : '/campaign/:id',
           element : <Camp></Camp>,
           loader : ({params}) => fetch(`http://localhost:5000/camp/${params.id}`)
         }
-        ,
-        {
-          path : '/newCampaign',
+          ,
+          {
+          path : '/addCampaign',
           element : <PrivateAuthentication><Campaings/></PrivateAuthentication>
-        },
-        {
-          path : '/allCampaign',
-          element : <div>this is all camp</div>
         },
         {
           path : '/myCampaign',
           element : <MyCampaign/>
         },
         {
-          path : '/updateCamp/:id',
+          path : '/updateCampaign/:id',
           element : <UpdateCamp></UpdateCamp>,
           loader : ({params}) => fetch(`http://localhost:5000/updateCamp/${params.id}`)
         }

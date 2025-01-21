@@ -31,7 +31,7 @@ export default function AllCamp() {
                 : "Running"}
                 {console.log(singleCamp._id)}
             </td>
-            <td className="p-2 border items-center text-center"><Link to={`/allCamp/Camp/${singleCamp._id}`}><button className="w-full h-full hover:underline btn">See More</button></Link></td>
+            <td className="p-2 border items-center text-center"><Link to={`/campaign/${singleCamp._id}`}><button className="w-full h-full hover:underline btn">See More</button></Link></td>
           </tr>
         ))}
       </table>

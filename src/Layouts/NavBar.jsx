@@ -36,12 +36,12 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to='/allCampaign' className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={'/allCampaign'}>
+            <Link to='/campaigns' className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
               All Campaign
             </Link>
           </li>
           <li>
-            <Link to='/newCampaign' className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
+            <Link to='/addCampaign' className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
               New Campaign
             </Link>
           </li>

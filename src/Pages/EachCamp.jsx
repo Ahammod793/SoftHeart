@@ -69,7 +69,7 @@ export default function EachCamp({ eachData }) {
         </div>
       </div>
       <div className=" border group-hover:border-black flex flex-row text-center items-center justify-around">
-        <Link to={`/updateCamp/${eachData._id}`}>
+        <Link to={`/updateCampaign/${eachData._id}`}>
           <button className="btn btn-outline btn-neutral">Update</button>
         </Link>
         <button
