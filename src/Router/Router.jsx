@@ -10,6 +10,8 @@ import Campaings from "../Components/Campaings";
 import PrivateAuthentication from "../Auth/PrivateAuthentication";
 import MyCampaign from "../Pages/MyCampaign";
 import UpdateCamp from "../Pages/UpdateCamp";
+import AllCamp from "../Layouts/AllCamp";
+import Camp from "../Components/Camp";
   
   
  export const router = createBrowserRouter([
@@ -21,6 +23,16 @@ import UpdateCamp from "../Pages/UpdateCamp";
           path : '/',
           element : <Home></Home>
         },
+        {
+          path : '/allCampaign',
+          element : <AllCamp></AllCamp>,
+          loader : () => fetch(`http://localhost:5000`)
+        },{
+          path : '/allCamp/Camp/:id',
+          element : <Camp></Camp>,
+          loader : ({params}) => fetch(`http://localhost:5000/camp/${params.id}`)
+        }
+        ,
         {
           path : '/newCampaign',
           element : <PrivateAuthentication><Campaings/></PrivateAuthentication>

@@ -24,7 +24,7 @@ export default function NavBar() {
   }
   console.log(user)
   return (
-    <header className="flex flex-row items-center justify-between px-10 bg-[r#99daf8] bg-[#26343c] py-2">
+    <header className="flex flex-row items-center justify-between px-10 bg-[r#99daf8] bg-[#3b3030] py-2">
       <Link>
         <img src={logo} alt="softHeart" className="w-[140px] h-[50px]" />
       </Link>
@@ -36,7 +36,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={'/allCampaign'}>
+            <Link to='/allCampaign' className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={'/allCampaign'}>
               All Campaign
             </Link>
           </li>
