@@ -42,12 +42,12 @@ export default function Register() {
         })
         .then(()=>{
         navigate("/");
-        console.log(user);
+        // console.log(user);
       }
       )
       })
       .catch((err) => {
-        console.log(err.code);
+        // console.log(err.code);
         setResErr(err.code);
       });
   };

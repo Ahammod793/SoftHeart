@@ -29,7 +29,7 @@ export default function AllCamp() {
                 : new Date() > new Date(singleCamp.campaignEnd)
                 ? "Ended"
                 : "Running"}
-                {console.log(singleCamp._id)}
+                {/* {console.log(singleCamp._id)} */}
             </td>
             <td className="p-2 border items-center text-center"><Link to={`/campaign/${singleCamp._id}`}><button className="w-full h-full hover:underline btn">See More</button></Link></td>
           </tr>

@@ -54,7 +54,7 @@ export default function Campaings() {
       name, email,
       description,
     };
-    console.log(newCampaign);
+    // console.log(newCampaign);
     fetch(`http://localhost:5000/newcampaign`, {
       method: "POST",
       headers: {

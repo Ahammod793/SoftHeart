@@ -44,6 +44,6 @@ export default function AuthProvider({ children }) {
     logOut,
     user, setUser
   };
-console.log(userName, userEmail)
+// console.log(user)
   return <AuthContext.Provider value={items}>{children}</AuthContext.Provider>;
 }

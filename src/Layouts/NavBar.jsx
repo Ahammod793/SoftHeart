@@ -11,7 +11,7 @@ export default function NavBar() {
   const navigate = useNavigate()
   const day_night_thame = () => {
     setThame(!thame);
-    console.log(thame);
+    // console.log(thame);
   };
   const logoutHundle=()=>{
     logOut().then(() => {
@@ -22,7 +22,7 @@ export default function NavBar() {
       // An error happened.
     });
   }
-  console.log(user)
+  // console.log(user.photoURL)
   return (
     <header className="flex flex-row items-center justify-between px-10 bg-[r#99daf8] bg-[#3b3030] py-2">
       <Link>
@@ -51,7 +51,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none">
+            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={user?.email ? `/myDonations/${user.email}`:'/'}>
               My Donations
             </Link>
           </li>

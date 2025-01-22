@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
-import EachCamp from "./EachCamp";
+import EachCamp from "../Pages/EachCamp";
 
 export default function MyCampaign() {
   const { user, setUser, LogOut } = useContext(AuthContext);
@@ -15,9 +15,9 @@ export default function MyCampaign() {
   return (
     <>
       <div className="min-h-screen gap-2 flex flex-col">
-        {
-            authData.map((eachData, index) => <EachCamp key={index} eachData={eachData}></EachCamp>)
-        }
+        {authData.map((eachData, index) => (
+          <EachCamp key={index} eachData={eachData}></EachCamp>
+        ))}
       </div>
     </>
   );

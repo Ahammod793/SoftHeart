@@ -15,7 +15,7 @@ export default function UpdateCamp() {
 
   const campData = useLoaderData()
   const {_id,title,file,campType,campaignStart,campaignEnd, campDiscription,donation}= campData
-  console.log(campData)
+  // console.log(campData)
   const handleCustomDate = () => {
     setIsCustomDate(true);
   };
@@ -57,7 +57,7 @@ export default function UpdateCamp() {
       name, email,
       description,
     };
-    console.log(UpdCampaign);
+    // console.log(UpdCampaign);
     fetch(`http://localhost:5000/updateCamp/${_id}`, {
       method: "PATCH",
       headers: {
