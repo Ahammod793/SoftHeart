@@ -12,54 +12,60 @@
 .setBg{
   background-image: image('./trophy.png');
 }
-.three-d-container {
+.three-d-card-container {
+  gap: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f3f4f6;
 }
 
 .three-d-card {
-  background: #fff;
+  background: #685a5a;
   width: 300px;
-  height: 400px;
+  height: 420px;
   border-radius: 16px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .three-d-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(4px);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
-.three-d-image {
+.three-d-card .image {
   width: 100%;
-  height: 50%;
+  height: 200px !important;
   object-fit: cover;
+  border: 1px solid white;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  margin-bottom: 10px;
 }
 
-.three-d-content {
+.three-d-card-content {
   padding: 16px;
-  text-align: center;
+  text-align: start;
+  color: black;
+}
+.three-d-card-content .title{
+   font-size: 15px;
+   
 }
 
-.three-d-content h2 {
+.three-d-card-content h2 {
   font-size: 1.5rem;
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.three-d-content p {
+.three-d-card-content p {
   font-size: 1rem;
-  color: #6b7280;
+  color: #060d1c;
 }
 
-.three-d-content button {
-  margin-top: 16px;
+.three-d-card-content button {
   padding: 8px 16px;
   background-color: #3b82f6;
   color: white;
@@ -69,6 +75,6 @@
   transition: background-color 0.3s ease;
 }
 
-.three-d-content button:hover {
+.three-d-card-content button:hover {
   background-color: #2563eb;
 }

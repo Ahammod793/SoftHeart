@@ -6,10 +6,9 @@ import { AuthContext } from "../Auth/AuthProvider";
 export default function CampDetails() {
   const data = useLoaderData();
   const { user} = useContext(AuthContext)
-  const {  title,  campType,  campaignStart,  campaignEnd,  campDiscription,  donation,  file,  name,  email,} = data;
+  const {  _id ,title,  campType,  campaignStart,  campaignEnd,  campDiscription,  donation,  file,  name,  email,} = data;
   const [situation, setSituation] = useState("");
   const navigate = useNavigate()
-// console.log(email)
   useEffect(() => {
     const now = new Date();
     const startTime = new Date(campaignStart);
@@ -30,11 +29,13 @@ export default function CampDetails() {
   const donationHundler = () => {
     const donarName = user.displayName;
     const donarMail = user.email;
+    const campID = _id
     const thumb = file;
     const donatedAmount = donation;
     const headline = title;
     const donationSituation = situation;
-    const donarDetails = { donarName, donarMail, thumb, donatedAmount, headline, donationSituation };
+    const donationDate = new Date()
+    const donarDetails = {  campID,donarName, donarMail, thumb, donatedAmount, headline, donationSituation, donationDate };
     fetch(`http://localhost:5000/donarDetails`, {
       method: "POST",
       headers: { "content-type": "application/json" },

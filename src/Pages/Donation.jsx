@@ -1,19 +1,23 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export default function Donation({donation}) {
-    const { donarName, donarMail, thumb, donatedAmount, headline, donationSituation } = donation;
-    console.log(donation)
+
+    const { campID,donarName, donarMail, thumb, amount, title, situation ,donationDate } = donation;
   return (
-        <div className="three-d-container">
+        <div className="three-d-card-container">
           <div className="three-d-card">
-            <img src={thumb} alt="thumbnail" />
-            <div className="three-d-content">
-              <h2>3D Card Title</h2>
-              <p>
-                This is a 3D card example with custom CSS for shadow and hover
-                effects.
-              </p>
-              <button>Learn More</button>
+            <img src={thumb} alt="thumbnail" className='image'/>
+            <div className='flex flex-row justify-end text-end'>
+                <p className='text-end p-1 border rounded-lg mx-3'>{situation}</p>
+            </div>
+            <div className="three-d-card-content">
+              <h2 className='title' title={title}>{title.slice(0,30)}...</h2>
+              <h4>
+                Donat on : {(new Date(donationDate).toISOString().split("T")[0])}
+              </h4>
+              <p> amount is : {amount}</p>
+            <div className='items-center justify-center flex mt-4'><Link to={`/campaign/${campID}`} className='border px-2 py-2 rounded-lg hover:shadow-lg hover:bg-slate-300 bg-slate-400'>See Camp</Link></div>
             </div> 
            </div>
         </div>

@@ -10,7 +10,7 @@ import UpdateCamp from "../Pages/UpdateCamp";
 import AllCamp from "../Layouts/AllCamp";
 import MyDonations from "../Layouts/MyDonations";
 import MyCampaign from "../Layouts/MyCampaign";
-import CampDetails from "../Components/CampDetails";
+import CampDetails from "../Components/Camp";
 
 export const router = createBrowserRouter([
   {
