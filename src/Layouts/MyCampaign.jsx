@@ -15,10 +15,23 @@ export default function MyCampaign() {
   return (
     <>
       <div className="min-h-screen gap-2 flex flex-col">
-        {authData.map((eachData, index) => (
-          <EachCamp key={index} eachData={eachData}></EachCamp>
-        ))}
-      </div>
+        
+              {authData.length > 0 ? 
+              (
+                authData.map((eachData, index) => (
+                  <EachCamp key={index} eachData={eachData}></EachCamp>
+                )))
+              : 
+              (
+              <div className="flex flex-col items-center justify-center text-center min-h-screen mx-auto w-11/12">
+                  <h1 className="font-medium text-3xl text-white">
+                    You Have Not Set Up Any Campaign Yet
+                  </h1>
+                </div>
+              )
+            }
+            </div>
+  
     </>
   );
 }

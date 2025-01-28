@@ -51,7 +51,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={user?.email ? `/myDonations/${user.email}`:'/'}>
+            <Link className="hover:border-b-white hover:border-b-2 pb-1 active:border-none" to={user?.email ? `/myDonations/${user.email}`:'/soft_heart_register_accessPage'}>
               My Donations
             </Link>
           </li>
@@ -78,7 +78,7 @@ export default function NavBar() {
             <div className="w-10 rounded-full border border-green-400">
               <img
                 alt={user.displayName}
-                src={user.photoURL}
+                src={user.photoURL || 'https://i.ibb.co.com/vvpKSdP/download.jpg'}
               />
             </div>
           </div>

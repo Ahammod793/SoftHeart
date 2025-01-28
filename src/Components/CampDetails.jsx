@@ -57,7 +57,7 @@ export default function CampDetails() {
       <div className="lg:w-8/12 md:w-10/12 sm:11/12 flex flex-col mx-auto my-8 p-6 rounded-xl shadow-lg bg-[#404019] shadow-slate-900">
         <div className="m-3 p-1 border rounded-md bg-slate-400">
           <img
-            src={file || "https://via.placeholder.com/150"}
+            src={file}
             alt={title}
             className="border rounded-md w-full h-96 bg-slate-600"
           />

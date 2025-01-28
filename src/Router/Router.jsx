@@ -4,13 +4,13 @@ import AccessLayOut from "../Layouts/AccessLayOut";
 import Login from "../Pages/Login";
 import Register from "./Register";
 import Home from "../Layouts/Home";
-import Campaings from "../Components/Campaings";
+import Campaings from "../Components/NewCampaing";
 import PrivateAuthentication from "../Auth/PrivateAuthentication";
 import UpdateCamp from "../Pages/UpdateCamp";
 import AllCamp from "../Layouts/AllCamp";
 import MyDonations from "../Layouts/MyDonations";
 import MyCampaign from "../Layouts/MyCampaign";
-import CampDetails from "../Components/Camp";
+import CampDetails from "../Components/CampDetails";
 
 export const router = createBrowserRouter([
   {
@@ -28,9 +28,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/campaign/:id",
-        element:<PrivateAuthentication> <CampDetails /></PrivateAuthentication>,
+        element: (
+          <PrivateAuthentication>
+            <CampDetails />
+          </PrivateAuthentication>
+        ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/camp/${params.id}`),
+          fetch(`http://localhost:5000/updateCamp/${params.id}`),
       },
       {
         path: "/addCampaign",
@@ -42,17 +46,29 @@ export const router = createBrowserRouter([
       },
       {
         path: "/myCampaign",
-        element:  <PrivateAuthentication><MyCampaign /></PrivateAuthentication>,
+        element: (
+          <PrivateAuthentication>
+            <MyCampaign />
+          </PrivateAuthentication>
+        ),
       },
       {
         path: "/myDonations/:mail",
-        element: <PrivateAuthentication><MyDonations></MyDonations></PrivateAuthentication>,
+        element: (
+          <PrivateAuthentication>
+            <MyDonations></MyDonations>
+          </PrivateAuthentication>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/donarDetails/${params.mail}`),
       },
       {
         path: "/updateCampaign/:id",
-        element: <PrivateAuthentication><UpdateCamp></UpdateCamp></PrivateAuthentication>,
+        element: (
+          <PrivateAuthentication>
+            <UpdateCamp></UpdateCamp>
+          </PrivateAuthentication>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/updateCamp/${params.id}`),
       },

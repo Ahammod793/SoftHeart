@@ -8,7 +8,8 @@ import { AuthContext } from "../Auth/AuthProvider";
 export default function Campaings() {
   const [selectedTime, setSelectedTime] = useState("");
   const [isCustomDate, setIsCustomDate] = useState(false);
-  const [imageURL, setImageURL] = useState(null)
+  const [inputErr, setInputErr] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
   const campaignRef = useRef();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -29,7 +30,7 @@ export default function Campaings() {
 
   const inputImage = (e) => {
     const thumb = e.target.value;
-    setImageURL(thumb)
+    setImageURL(thumb);
   };
 
   const campaignHundler = (e) => {
@@ -43,7 +44,7 @@ export default function Campaings() {
     const name = user.displayName;
     const email = user.email;
     const description = form.campDetails.value;
-    const donationAmount_ = form.donationAmount.value
+    const donationAmount_ = form.donationAmount.value;
     const newCampaign = {
       campaignTitle,
       campaignType,
@@ -51,30 +52,48 @@ export default function Campaings() {
       campStart,
       campEnd,
       donationAmount_,
-      name, email,
+      name,
+      email,
       description,
     };
-    // console.log(newCampaign);
-    fetch(`http://localhost:5000/newcampaign`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newCampaign),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire({
-          title: "success",
-          text: "New Campaign Added",
-          icon: "success",
-        }).then(form.reset(), navigate("/allCampaign"));
-      });
+    if (!file) {
+      return setInputErr("Input Thumbnail");
+    } else if (!campaignTitle) {
+      return setInputErr("Input Title");
+    } else if (!description) {
+      return setInputErr("Input Description");
+    } else if (!donationAmount_) {
+      return setInputErr("Input Donation");
+    } else if (!campStart) {
+      return setInputErr("Input Start Date");
+    } else if (!campEnd) {
+      return setInputErr("Input End Date"); 
+    } else {
+      fetch(`http://localhost:5000/newcampaign`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newCampaign),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          Swal.fire({
+            title: "success",
+            text: "New Campaign Added",
+            icon: "success",
+          }).then(form.reset(), navigate("/campaigns"));
+        });
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center mb-6 min-h-screen">
-      <form className="w-6/12 my-8" ref={campaignRef}>
+      <form
+        className="w-6/12 my-8"
+        ref={campaignRef}
+        onChange={() => setInputErr(null)}
+      >
         <div className="flex flex-col ">
           <h2 className="font-medium text-black text-left items-center p-1">
             Image or Thumbnail
@@ -89,9 +108,9 @@ export default function Campaings() {
             />
             {imageURL && (
               <div className="w-full h-[90%]">
-                  <Slide direction="down">
-                    <img src={imageURL} className="w-full h-[400px] pt-4" />
-                  </Slide>
+                <Slide direction="down">
+                  <img src={imageURL} className="w-full h-[400px] pt-4" />
+                </Slide>
               </div>
             )}
           </div>
@@ -207,6 +226,9 @@ export default function Campaings() {
               <h1 className="text-bold text-[14px]">{user.email}</h1>
             </div>
           </div>
+        </div>
+        <div className="items-center justify-center">
+          <h4 className="text-red-600 font-light">{inputErr}</h4>
         </div>
       </form>
       <div className="flex items-end justify-end w-6/12 gap-6">

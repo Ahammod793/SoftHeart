@@ -71,7 +71,7 @@ export default function UpdateCamp() {
           title: "success",
           text: "campaign Updated",
           icon: "success",
-        }).then(form.reset(), navigate("/allCampaign"));
+        }).then(form.reset(), navigate("/campaigns"));
       });
   };
 

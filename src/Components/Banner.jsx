@@ -46,7 +46,7 @@ const BannerCarousel = () => {
       <div className="">
         <h2 className="font-bold text-green-100">Start Your Campaign</h2>
         <h1 className="relative top-8 left-8 flex h-8 font-thin font-mono text-white">
-          Find People Those Wil Help to Complete Your Project
+          Find People Those Wil Help <br /> to Complete Your Project
         </h1>
       </div>
     </div>,

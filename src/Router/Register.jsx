@@ -4,12 +4,14 @@ import { AuthContext } from "../Auth/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../FireBase/firebase.config";
 import Swal from "sweetalert2";
+import { stringify } from "postcss";
 export default function Register() {
   const [invalidInputPass, setInvalidInputPass] = useState(null);
   const [resErr, setResErr] = useState(null);
   const formRef = useRef();
   const { newUserWithEmailPass, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const registerHunlder = (e) => {
     e.preventDefault();
     const form = formRef.current;
@@ -17,6 +19,7 @@ export default function Register() {
     const Email = form.email.value;
     const password = form.password.value;
     const profilePic = form.profile.value;
+    const date = new Date();
     // const userinfo = { name, profilePic };
     const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
     if (!regex.test(password)) {
@@ -27,27 +30,32 @@ export default function Register() {
     }
     newUserWithEmailPass(Email, password)
       .then((userResult) => {
+        fetch(`http://localhost:5000/users`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ Email, name, date }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // data
+          });
         const user = userResult.user;
         updateProfile(auth.currentUser, {
           displayName: name,
-          email : Email,
+          email: Email,
           photoURL: profilePic,
         }).then(() => {
-          setUser(user)
+          setUser(user);
         });
         Swal.fire({
           title: "SignUp Success!",
           icon: "success",
-          draggable: true
-        })
-        .then(()=>{
-        navigate("/");
-        // console.log(user);
-      }
-      )
+          draggable: true,
+        }).then(() => {
+          navigate("/");
+        });
       })
       .catch((err) => {
-        // console.log(err.code);
         setResErr(err.code);
       });
   };

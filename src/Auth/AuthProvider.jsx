@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../FireBase/firebase.config";
 import {
   createUserWithEmailAndPassword,
   GithubAuthProvider,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -44,6 +45,16 @@ export default function AuthProvider({ children }) {
     logOut,
     user, setUser
   };
+
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); 
+      // setLoading(false)
+    });
+    return () => {
+      unSubscribe();
+    };
+  }, []);
 // console.log(user)
   return <AuthContext.Provider value={items}>{children}</AuthContext.Provider>;
 }
