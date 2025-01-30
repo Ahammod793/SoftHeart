@@ -103,10 +103,10 @@ export default function Upgrade() {
   });
 
   return (
-    <div className="mx-auto w-11/1 p-4 flex flex-col ">
+    <div className="mx-auto w-5/6 md:w-11/1 p-2 md:p-4 flex flex-col bg-base-300 mb-12">
       
       
-      <div className="items-center justify-center">
+      <div className="items-center justify-center w-full">
       <ResponsiveContainer width={'100%'} height={400}>
         <LineChart
          width={500}
@@ -130,8 +130,8 @@ export default function Upgrade() {
         </LineChart>
       </ResponsiveContainer>
       </div>
-      <div className="items-center justify-center text-center flex flex-row  border border-gray-100 rounded-lg w-3/6 mx-auto my-6">
-        <h3 className="flex text-center justify-center items-center py-8">Out website Upgration</h3>
+      <div className="items-center justify-center text-center flex flex-row  border border-gray-100 rounded-lg w-3/6 mx-auto my-6  border-secondary">
+        <h3 className="flex text-center justify-center items-center py-8 text-secondary">Out website Upgration</h3>
       </div>
     </div>
   );

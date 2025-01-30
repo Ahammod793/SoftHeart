@@ -30,31 +30,31 @@ export default function EachCamp({ eachData }) {
         })
           .then((res) => res.json())
           .then((data) => {
-            if(data.deletedCount>0){
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your campaign has been deleted.",
-              icon: "success",
-            }).then(navigate('/'))
-          };
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your campaign has been deleted.",
+                icon: "success",
+              }).then(navigate("/"));
+            }
           });
       }
     });
   };
   return (
-    <div className="group justify-between grid grid-cols-4 grid-rows-2 p-2 mt-4 border border-purple-500">
-      <div className="row-span-2 bg-red h-[200px] mr-2 bg-slate-300 border group-hover:border-black ">
+    <div className="group justify-between grid grid-cols-4 grid-rows-2 p-2 mt-4 border border-secondary bg-base-300">
+      <div className="row-span-2 bg-red h-[200px] mr-2  border group-hover:border-black ">
         {file && (
           <img src={file} alt={title} className="w-full h-full object-cover" />
         )}
       </div>
-      <div className="col-span-3 bg-slate-200 border group-hover:border-black px-3 pt-2 mb-2">
-        <h1 className="text-black font-bold text-2xl">{title}</h1>
+      <div className="col-span-3  border group-hover:border-black px-3 pt-2 mb-2">
+        <h1 className=" font-bold text-2xl">{title}</h1>
         <p>{details}</p>
       </div>
       <div className="col-span-2 flex flex-row items-center justify-around bg- border group-hover:border-black mr-2">
         <div>
-          <h4 className="text-xl text-black font-semibold">
+          <h4 className="text-xl  font-semibold">
             {now < startTime
               ? "Not Start Yet"
               : now > endTime

@@ -8,13 +8,22 @@ import { AuthContext } from "../Auth/AuthProvider";
 export default function UpdateCamp() {
   const [selectedTime, setSelectedTime] = useState("");
   const [isCustomDate, setIsCustomDate] = useState(false);
-  const [imageURL, setImageURL] = useState(null)
+  const [imageURL, setImageURL] = useState(null);
   const campaignRef = useRef();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  const campData = useLoaderData()
-  const {_id,title,file,campType,campaignStart,campaignEnd, campDiscription,donation}= campData
+  const campData = useLoaderData();
+  const {
+    _id,
+    title,
+    file,
+    campType,
+    campaignStart,
+    campaignEnd,
+    campDiscription,
+    donation,
+  } = campData;
   // console.log(campData)
   const handleCustomDate = () => {
     setIsCustomDate(true);
@@ -32,7 +41,7 @@ export default function UpdateCamp() {
 
   const inputImage = (e) => {
     const thumb = e.target.value;
-    setImageURL(thumb)
+    setImageURL(thumb);
   };
 
   const updateCamp = (e) => {
@@ -46,7 +55,7 @@ export default function UpdateCamp() {
     const name = user.displayName;
     const email = user.email;
     const description = form.campDetails.value;
-    const donationAmount_ = form.donationAmount.value
+    const donationAmount_ = form.donationAmount.value;
     const UpdCampaign = {
       campaignTitle,
       campaignType,
@@ -54,7 +63,8 @@ export default function UpdateCamp() {
       campStart,
       campEnd,
       donationAmount_,
-      name, email,
+      name,
+      email,
       description,
     };
     // console.log(UpdCampaign);
@@ -79,7 +89,7 @@ export default function UpdateCamp() {
     <div className="flex flex-col items-center justify-center mb-6 min-h-screen">
       <form className="w-6/12 my-8" ref={campaignRef}>
         <div className="flex flex-col ">
-          <h2 className="font-medium text-black text-left items-center p-1">
+          <h2 className="font-medium  text-left items-center p-1">
             Image or Thumbnail
           </h2>
           <div className="shadow p-3 items-center justify-center w-full h-auto mb-5 border border-blue-200">
@@ -93,14 +103,14 @@ export default function UpdateCamp() {
             />
             {imageURL && (
               <div className="w-full h-[90%]">
-                  <Slide direction="down">
-                    <img src={imageURL} className="w-full h-[400px] pt-4" />
-                  </Slide>
+                <Slide direction="down">
+                  <img src={imageURL} className="w-full h-[400px] pt-4" />
+                </Slide>
               </div>
             )}
           </div>
         </div>
-        <label className="text-black text-left items-center font-medium">
+        <label className=" text-left items-center font-medium">
           HeadLine for Your Campaign <br />
           <input
             type="text"
@@ -111,14 +121,13 @@ export default function UpdateCamp() {
           />
         </label>
         <div className="flex flex-col">
-          <h3 className="font-medium text-black text-left items-center">
-            Campaign Type
-          </h3>
+          <h3 className="font-medium  text-left items-center">Campaign Type</h3>
           <label className="flex flex-col">
             <select
               name="campaignType"
-              id="campaignType" defaultValue={campType}
-              className="font-light text-black mt-1 mb-5 p-2 border border-black"
+              id="campaignType"
+              defaultValue={campType}
+              className="font-light  mt-1 mb-5 p-2 border border-black"
             >
               <option value="personal">Personal</option>
               <option value="startUp">StartUp</option>
@@ -128,19 +137,18 @@ export default function UpdateCamp() {
           </label>
         </div>
 
-
         <div className="w-full mt-2 mb-2">
-          <h2 className="font-medium text-black text-left items-center p-1">
+          <h2 className="font-medium  text-left items-center p-1">
             Campaign Details:
           </h2>
-          <textarea 
+          <textarea
             defaultValue={campDiscription}
             name="campDetails"
             className="p-2 w-full h-[200px] text-lg font-light border border-black"
           ></textarea>
         </div>
         <div className="flex flex-col  gap-2 my-2">
-          <h2 className="font-medium text-black text-left items-center p-1">
+          <h2 className="font-medium  text-left items-center p-1">
             Min. Donation Amount
           </h2>
           <input
@@ -148,14 +156,15 @@ export default function UpdateCamp() {
             defaultValue={donation}
             name="donationAmount"
             required
-            className="text-black border border-black p-4 "
+            className=" border border-black p-4 "
           />
         </div>
         <div className="flex justify-around items-start mt-4">
           <div className="mb-3">
-            <h3 className="font-medium pb-1 text-black">When will it start?</h3>
+            <h3 className="font-medium pb-1 ">When will it start?</h3>
             <select
-              id="vv" defaultValue={campaignStart}
+              id="vv"
+              defaultValue={campaignStart}
               onChange={handleSelectChange}
               className="border border-black rounded-md p-1"
             >
@@ -163,38 +172,35 @@ export default function UpdateCamp() {
               <option value="custom">Custom Date</option>
             </select>
             {isCustomDate && (
-              <div className="p-1 text-black">
+              <div className="p-1 ">
                 <input
                   type="datetime-local"
                   onChange={(e) => setSelectedTime(e.target.value)}
-                  className="text-black font-medium border border-black rounded-md p-1"
+                  className=" font-medium border border-black rounded-md p-1"
                 />
               </div>
             )}
           </div>
           <div className="flex flex-col">
-            <h2 className="font-medium pb-1 text-black">
-              Campaign Will End at -
-            </h2>
+            <h2 className="font-medium pb-1 ">Campaign Will End at -</h2>
             <input
-              type="datetime-local" defaultValue={campaignEnd}
+              type="datetime-local"
+              defaultValue={campaignEnd}
               name="endTime"
               id="endTime"
-              className="text-black font-medium border border-black rounded-md p-1"
+              className=" font-medium border border-black rounded-md p-1"
             />
           </div>
         </div>
         <div className="flex flex-col  gap-2">
-          <h2 className="font-medium text-black text-left items-center p-1">
-            Author
-          </h2>
+          <h2 className="font-medium  text-left items-center p-1">Author</h2>
           <div className="shadow p-3 items-center justify-center w-full h-auto  border border-blue-200">
             <div className="flex flex-row gap-20">
-              <h4 className="text-bold text-black text-[16px]">Name :</h4>
+              <h4 className="text-bold  text-[16px]">Name :</h4>
               <h1 className="text-bold text-[14px]">{user.displayName}</h1>
             </div>
             <div className="flex flex-row gap-20">
-              <h4 className="text-bold text-black text-[16px]">Email : </h4>
+              <h4 className="text-bold  text-[16px]">Email : </h4>
               <h1 className="text-bold text-[14px]">{user.email}</h1>
             </div>
           </div>

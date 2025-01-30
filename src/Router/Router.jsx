@@ -11,6 +11,7 @@ import AllCamp from "../Layouts/AllCamp";
 import MyDonations from "../Layouts/MyDonations";
 import MyCampaign from "../Layouts/MyCampaign";
 import CampDetails from "../Components/CampDetails";
+import Error from "../Components/ErrorElement";
 
 export const router = createBrowserRouter([
   {
@@ -72,7 +73,7 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/updateCamp/${params.id}`),
       },
-    ],
+    ],errorElement : <Error></Error>,
   },
   {
     path: "soft_heart_register_accessPage",
@@ -87,5 +88,6 @@ export const router = createBrowserRouter([
         element: <Register></Register>,
       },
     ],
+    errorElement : <Error></Error>,
   },
 ]);

@@ -1,16 +1,25 @@
 import React, { useContext, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Auth/AuthProvider";
 import Swal from "sweetalert2";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
-  const { loginWithEmailPass, loginWithGoogle, loginWithGitHub, setUserName, setUserEmail, setUserImage, setUser} = useContext(AuthContext);
+  const {
+    loginWithEmailPass,
+    loginWithGoogle,
+    loginWithGitHub,
+    setUserName,
+    setUserEmail,
+    setUserImage,
+    setUser,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [resErr, setResErr] = useState(null)
+  const [resErr, setResErr] = useState(null);
   const formRef = useRef();
-  
+  const location = useLocation()
+
   const loginButton = (e) => {
     e.preventDefault();
     const form = formRef.current;
@@ -19,38 +28,40 @@ export default function Login() {
     loginWithEmailPass(email, pass)
       .then((res) => {
         // console.log(res);
-        setUser(res.user)
+        setUser(res.user);
         Swal.fire({
           title: "SignUp Success!",
           icon: "success",
           draggable: true,
         }).then(() => {
-          navigate("/");
+          navigate(location.state ? location.state : "/");
           // console.log(user);
         });
       })
 
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         setResErr(err.code);
       });
   };
   const googleLogin = () => {
-    loginWithGoogle().then((res) => {
-      console.log(res)
-      setUser(res.user)
-      Swal.fire({
-        title: "SignUp Success!",
-        icon: "success",
-        draggable: true,
-      }).then(() => {
-        navigate("/");
-        // console.log(user);
+    loginWithGoogle()
+      .then((res) => {
+        console.log(res);
+        setUser(res.user);
+        Swal.fire({
+          title: "SignUp Success!",
+          icon: "success",
+          draggable: true,
+        }).then(() => {
+          navigate(location.state ? location.state : "/");
+          // console.log(user);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setResErr(err.code);
       });
-    }).catch(err => {
-      console.log(err)
-      setResErr(err.code);
-    })
   };
   // .then((result) => {
   //   // This gives you a GitHub Access Token. You can use it to access the GitHub API.
@@ -63,18 +74,20 @@ export default function Login() {
   //   // ...
   // })
   const githubLogin = () => {
-    loginWithGitHub().then((res) => {
-      console.log(res)
-      setUser(res.user)
-      Swal.fire({
-        title: "SignUp Success!",
-        icon: "success",
-        draggable: true,
-      }).then(() => {
-        navigate("/");
-        // console.log(user);
-      });
-    }).catch(err => {
+    loginWithGitHub()
+      .then((res) => {
+        console.log(res);
+        setUser(res.user);
+        Swal.fire({
+          title: "SignUp Success!",
+          icon: "success",
+          draggable: true,
+        }).then(() => {
+          navigate(location.state ? location.state : "/");
+          // console.log(user);
+        });
+      })
+      .catch((err) => {
         // Handle Errors here.
         const errorCode = err.code;
         const errorMessage = err.message;
@@ -83,10 +96,17 @@ export default function Login() {
         // The AuthCredential type that was used.
         // const credential = GithubAuthProvider.credentialFromError(err);
         // ...
-    console.log(errorMessage, 'code ', errorCode, 'email ', email, 'credential ',)
-      setResErr(err.code);
-    })
-  }
+        console.log(
+          errorMessage,
+          "code ",
+          errorCode,
+          "email ",
+          email,
+          "credential "
+        );
+        setResErr(err.code);
+      });
+  };
   const forgatePass = (e) => {
     e.preventDefault();
   };
@@ -94,11 +114,25 @@ export default function Login() {
     <>
       <div>
         <div className="p-4 flex flex-col gap-4 items-center justify-center ">
-          <button onClick={googleLogin} className="m-1 p-2 w-full shadow-xl  text-black  font-medium text-2xl border border-black rounded-md flex items-center justify-center hover:bg-slate-400"><FcGoogle></FcGoogle> &nbsp;Google</button>
-          <button onClick={githubLogin} className="m-1 p-2 w-full shadow-xl  text-black  font-medium text-2xl border border-black rounded-md flex items-center justify-center hover:bg-slate-400"><FaGithub></FaGithub> &nbsp;GitHub</button>
+          <button
+            onClick={googleLogin}
+            className="m-1 p-2 w-full shadow-xl    font-medium text-2xl border border-black rounded-md flex items-center justify-center hover:bg-slate-400"
+          >
+            <FcGoogle></FcGoogle> &nbsp;Google
+          </button>
+          <button
+            onClick={githubLogin}
+            className="m-1 p-2 w-full shadow-xl    font-medium text-2xl border border-black rounded-md flex items-center justify-center hover:bg-slate-400"
+          >
+            <FaGithub></FaGithub> &nbsp;GitHub
+          </button>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form className="card-body" ref={formRef} onChange={()=>setResErr(null)}>
+          <form
+            className="card-body"
+            ref={formRef}
+            onChange={() => setResErr(null)}
+          >
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -147,11 +181,11 @@ export default function Login() {
             {/* {error} */}
           </p>
         </div>
-        <h3 className="text-black font-semibold items-center text-center py-4">
+        <h3 className=" font-semibold items-center text-center py-4">
           {" "}
           Create new account
         </h3>
-        <Link to="soft_heart_register">
+        <Link to="soft_heart_register" state={location?.state && location?.state}>
           <button className="btn btn-success">Register</button>
         </Link>
       </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Auth/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../FireBase/firebase.config";
@@ -10,6 +10,7 @@ export default function Register() {
   const [resErr, setResErr] = useState(null);
   const formRef = useRef();
   const { newUserWithEmailPass, setUser } = useContext(AuthContext);
+  const location = useLocation()
   const navigate = useNavigate();
 
   const registerHunlder = (e) => {
@@ -52,7 +53,7 @@ export default function Register() {
           icon: "success",
           draggable: true,
         }).then(() => {
-          navigate("/");
+          navigate(location?.state ? location.state : "/");
         });
       })
       .catch((err) => {
@@ -129,12 +130,12 @@ export default function Register() {
             </button>
           </div>
         </form>
-        <div className="text-[12px] font-light h-4 text-red-700 w-full">
+        <div className="text-[12px] font-light h-4  w-full">
           {resErr}
         </div>
       </div>
 
-      <h4 className="text-black font-semibold items-center text-center py-4">
+      <h4 className=" font-semibold items-center text-center py-4">
         Already Have an Account?
       </h4>
       <Link to={"/soft_heart_register_accessPage"}>
